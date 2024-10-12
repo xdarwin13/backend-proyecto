@@ -1,7 +1,8 @@
 import { Request, Response, Application } from "express";
 import { MateriaController } from "../controllers/materiaController";
-import validateTokenAdmin from "./veriTokenAdmin";
-import validateTokenEstudiantes from "./veriTokenEstudiante";
+import validateTokenAdmin from "../middleware/veriTokenAdmin";
+import validateTokenEstudiantes from "../middleware/veriTokenEstudiante";
+
 export class MateriaRoutes {
     public materiaController: MateriaController = new MateriaController();
 

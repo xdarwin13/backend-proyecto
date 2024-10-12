@@ -1,8 +1,8 @@
 import { Request, Response, Application } from "express";
 import { AsistenciaController } from "../controllers/asistenciaController";
-import validateTokenEstudiantes from "./veriTokenEstudiante";
-import validateTokenProfesores from "./veriTokenProfesor";
-import validateTokenAdmin from "./veriTokenAdmin";
+import validateTokenEstudiantes from "../middleware/veriTokenEstudiante";
+import validateTokenProfesores from "../middleware/veriTokenProfesor";
+import validateTokenAdmin from "../middleware/veriTokenAdmin";
 
 export class AsistenciaRoutes {
     public asistenciaController: AsistenciaController = new AsistenciaController();
@@ -18,6 +18,6 @@ export class AsistenciaRoutes {
         app.route("/asistencias").get(validateTokenAdmin,this.asistenciaController.listarAsistencias);
 
         // Actualizar asistencia
-        app.route("/asistencias/:id").patch( this.asistenciaController.actualizarAsistencia);
+        app.route("/asistencias/:id").patch(validateTokenAdmin,this.asistenciaController.actualizarAsistencia);
     }
 }
