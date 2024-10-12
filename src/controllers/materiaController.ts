@@ -18,15 +18,29 @@ export class MateriaController {
         }
     }
 
-    // Listar todas las materias
-    public async listarMaterias(req: Request, res: Response) {
-        try {
-            const materias = await MateriaModel.findAll();
-            res.status(200).json({ materias });
-        } catch (error) {
-            res.status(500).json({ error: "Error al obtener las materias" });
-        }
+ // Listar materias por carrera
+ public async listarMaterias(req: Request, res: Response) {
+    const { carrera } = req.body; // Ahora espera que 'carrera' se pase en el cuerpo de la solicitud
+
+    if (!carrera) {
+        return res.status(400).json({ msg: "La carrera es obligatoria" });
     }
+
+    try {
+        const materias = await MateriaModel.findAll({
+            where: { carrera } // Filtra las materias por la carrera especificada
+        });
+
+        if (materias.length === 0) {
+            return res.status(404).json({ msg: "No se encontraron materias para esta carrera" });
+        }
+
+        res.status(200).json({ materias });
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener las materias por carrera" });
+    }
+}
+
 
     // Actualizar materia
     public async actualizarMateria(req: Request, res: Response) {

@@ -10,7 +10,7 @@ export class MateriaRoutes {
         app.route("/materias").post( this.materiaController.crearMateria);
 
         // Listar todas las materias
-        app.route("/materias").get( this.materiaController.listarMaterias);
+        app.route("/materias/carreras").post( this.materiaController.listarMaterias);
 
         // Actualizar materia
         app.route("/materias/:id").patch( this.materiaController.actualizarMateria);
