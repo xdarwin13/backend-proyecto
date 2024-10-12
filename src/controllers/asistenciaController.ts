@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { AsistenciaModel } from '../models/asistenciaModel';
-
+import { EstudianteModel } from '../models/estudianteModel';
+import { MateriaModel } from '../models/materiaModel';
 export class AsistenciaController {
   // Registrar asistencia como estudiante
   public async registrarAsistenciaEstudiante(req: Request, res: Response) {
@@ -42,15 +43,42 @@ export class AsistenciaController {
     }
   }
 
-  // Listar todas las asistencias
-  public async listarAsistencias(req: Request, res: Response) {
-    try {
-      const asistencias = await AsistenciaModel.findAll();
-      res.status(200).json({ asistencias });
-    } catch (error) {
+// Listar todas las asistencias con nombres de estudiantes y materias
+public async listarAsistencias(req: Request, res: Response) {
+  try {
+      const asistencias = await AsistenciaModel.findAll({
+          include: [
+              {
+                  model: EstudianteModel,
+                  attributes: ['id', 'nombre'], // Incluye los atributos necesarios del estudiante
+                  as: 'estudiante' // Asegúrate de usar el alias definido en la relación
+              },
+              {
+                  model: MateriaModel,
+                  attributes: ['id', 'nombre'], // Incluye los atributos necesarios de la materia
+                  as: 'materia' // Asegúrate de usar el alias definido en la relación
+              },
+          ],
+      });
+
+      // Formatear la respuesta para incluir solo lo necesario
+      const response = asistencias.map(asistencia => ({
+          id_estudiante: asistencia.id_estudiante,
+          nombre_estudiante: asistencia.estudiante?.nombre, // Acceder al nombre del estudiante
+          id_materia: asistencia.id_materia,
+          nombre_materia: asistencia.materia?.nombre, // Acceder al nombre de la materia
+          salon: asistencia.salon,
+          fecha: asistencia.fecha,
+          hora_entrada: asistencia.hora_entrada,
+          hora_salida: asistencia.hora_salida,
+      }));
+
+      res.status(200).json({ asistencias: response });
+  } catch (error) {
+      console.error(error); // Esto ayuda a depurar el error
       res.status(500).json({ error: "Error al obtener las asistencias" });
-    }
   }
+}
 
   // Actualizar asistencia
   public async actualizarAsistencia(req: Request, res: Response) {

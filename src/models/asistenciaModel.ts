@@ -14,6 +14,11 @@ export class AsistenciaModel extends Model {
     public fecha!: Date;
     public hora_entrada!: Date;
     public hora_salida?: Date;
+
+    // Propiedades para las relaciones
+    public estudiante?: EstudianteModel; // Propiedad para la relación estudiante
+    public profesor?: ProfesorModel;       // Propiedad para la relación profesor
+    public materia?: MateriaModel;         // Propiedad para la relación materia
 }
 
 export interface AsistenciaI {
@@ -80,3 +85,22 @@ AsistenciaModel.init(
         timestamps: false,
     }
 );
+
+// Establecer relaciones
+AsistenciaModel.belongsTo(EstudianteModel, {
+    foreignKey: 'id_estudiante',
+    targetKey: 'id', // Asumiendo que el campo clave primaria es 'id'
+    as: 'estudiante', // Alias para acceder a la relación
+});
+
+AsistenciaModel.belongsTo(ProfesorModel, {
+    foreignKey: 'id_profesor',
+    targetKey: 'id', // Asumiendo que el campo clave primaria es 'id'
+    as: 'profesor', // Alias para acceder a la relación
+});
+
+AsistenciaModel.belongsTo(MateriaModel, {
+    foreignKey: 'id_materia',
+    targetKey: 'id', // Asumiendo que el campo clave primaria es 'id'
+    as: 'materia', // Alias para acceder a la relación
+});
