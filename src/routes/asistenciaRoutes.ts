@@ -7,7 +7,7 @@ export class AsistenciaRoutes {
 
     public routes(app: Application): void {
         // Registrar asistencia como estudiante
-        app.route("/asistencias/estudiante").post(this.asistenciaController.registrarAsistenciaEstudiante);
+        app.route("/asistencias/estudiante").post(validateToken,this.asistenciaController.registrarAsistenciaEstudiante);
 
         // Registrar asistencia como profesor
         app.route("/asistencias/profesor").post( this.asistenciaController.registrarAsistenciaProfesor);

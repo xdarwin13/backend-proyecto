@@ -4,12 +4,12 @@ import { AsistenciaModel } from '../models/asistenciaModel';
 export class AsistenciaController {
   // Registrar asistencia como estudiante
   public async registrarAsistenciaEstudiante(req: Request, res: Response) {
-    const { id_estudiante, materia, salon, hora_entrada, hora_salida } = req.body;
+    const { id_estudiante, id_materia, salon, hora_entrada, hora_salida } = req.body;
 
     try {
       const nuevaAsistencia = await AsistenciaModel.create({
         id_estudiante,
-        materia,
+        id_materia,
         salon,
         fecha: new Date(),
         hora_entrada,
@@ -24,12 +24,12 @@ export class AsistenciaController {
 
   // Registrar asistencia como profesor
   public async registrarAsistenciaProfesor(req: Request, res: Response) {
-    const { id_profesor, materia, salon, hora_entrada, hora_salida } = req.body;
+    const { id_profesor, id_materia, salon, hora_entrada, hora_salida } = req.body;
 
     try {
       const nuevaAsistencia = await AsistenciaModel.create({
         id_profesor,
-        materia,
+        id_materia,
         salon,
         fecha: new Date(),
         hora_entrada,
@@ -59,7 +59,7 @@ export class AsistenciaController {
     const {
         id_estudiante,
         id_profesor,
-        materia,
+        id_materia,
         salon,
         hora_entrada,
         hora_salida
@@ -70,7 +70,7 @@ export class AsistenciaController {
         let body = {
             id_estudiante,
             id_profesor,
-            materia,
+            id_materia,
             salon,
             hora_entrada,
             hora_salida
