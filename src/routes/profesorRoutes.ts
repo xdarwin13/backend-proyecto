@@ -1,6 +1,6 @@
 import { Request, Response, Application } from "express";
 import { ProfesorController } from "../controllers/profesorController";
-import validateToken from "./veriToken";
+import validateToken from "./veriTokenEstudiantesaaa";
 
 export class ProfesorRoutes {
     public profesorController: ProfesorController = new ProfesorController();

@@ -1,6 +1,6 @@
 import { Request, Response, Application } from "express";
 import { AdminController } from "../controllers/adminController";
-import validateToken from "./veriToken";
+import validateToken from "./veriTokenEstudiantesaaa";
 
 export class AdminRoutes {
     public adminController: AdminController = new AdminController();
