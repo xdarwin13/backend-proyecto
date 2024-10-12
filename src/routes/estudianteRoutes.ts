@@ -13,6 +13,6 @@ export class EstudianteRoutes {
         app.route("/estudiantes/login").post(this.estudianteController.login);
 
         // Obtener perfil estudiante
-        app.route("/estudiantes/:id").get(validateToken, this.estudianteController.getProfile);
+        app.route("/estudiantes/:id").get(this.estudianteController.getProfile);
     }
 }

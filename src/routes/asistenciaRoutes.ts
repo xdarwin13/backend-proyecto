@@ -7,15 +7,15 @@ export class AsistenciaRoutes {
 
     public routes(app: Application): void {
         // Registrar asistencia como estudiante
-        app.route("/asistencias/estudiante").post(validateToken,this.asistenciaController.registrarAsistenciaEstudiante);
+        app.route("/asistencias/estudiante").post(this.asistenciaController.registrarAsistenciaEstudiante);
 
         // Registrar asistencia como profesor
         app.route("/asistencias/profesor").post( this.asistenciaController.registrarAsistenciaProfesor);
 
         // Listar todas las asistencias
-        app.route("/asistencias").get(validateToken, this.asistenciaController.listarAsistencias);
+        app.route("/asistencias").get( this.asistenciaController.listarAsistencias);
 
         // Actualizar asistencia
-        app.route("/asistencias/:id").patch(validateToken, this.asistenciaController.actualizarAsistencia);
+        app.route("/asistencias/:id").patch( this.asistenciaController.actualizarAsistencia);
     }
 }
