@@ -7,15 +7,15 @@ export class MateriaRoutes {
 
     public routes(app: Application): void {
         // Registrar nueva materia
-        app.route("/materias").post(validateToken, this.materiaController.crearMateria);
+        app.route("/materias").post( this.materiaController.crearMateria);
 
         // Listar todas las materias
-        app.route("/materias").get(validateToken, this.materiaController.listarMaterias);
+        app.route("/materias").get( this.materiaController.listarMaterias);
 
         // Actualizar materia
-        app.route("/materias/:id").patch(validateToken, this.materiaController.actualizarMateria);
+        app.route("/materias/:id").patch( this.materiaController.actualizarMateria);
 
         // Eliminar materia
-        app.route("/materias/:id").delete(validateToken, this.materiaController.eliminarMateria);
+        app.route("/materias/:id").delete(this.materiaController.eliminarMateria);
     }
 }

@@ -47,8 +47,8 @@ MateriaModel.init(
         timestamps: false,
         hooks: {
             beforeValidate: (materia: MateriaModel) => {
-                if (typeof materia.nombre === "string") materia.nombre = materia.nombre.trim();
-                if (typeof materia.carrera === "string") materia.carrera = materia.carrera.trim();
+                if (typeof materia.nombre === "string") materia.nombre = materia.nombre.trim().toLocaleUpperCase();
+                if (typeof materia.carrera === "string") materia.carrera = materia.carrera.trim().toLocaleUpperCase();
             },
             beforeCreate: (materia: MateriaModel) => {
                 materia.createdAt = moment().tz('America/Bogota').toDate();

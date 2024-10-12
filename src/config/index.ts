@@ -32,6 +32,7 @@ export class App {
     this.routePrv.estudianteRoutes.routes(this.app)
     this.routePrv.profesorRoutes.routes(this.app)
     this.routePrv.adminRoutes.routes(this.app)
+    this.routePrv.materiaRoutes.routes(this.app)
     }
 
 
