@@ -1,6 +1,6 @@
 import { Request, Response, Application, Router } from "express";
 import { EstudianteController } from "../controllers/estudianteController";
-import validateToken from "./veriTokenEstudiantesaaa";
+
 
 export class EstudianteRoutes {
     public estudianteController: EstudianteController = new EstudianteController();

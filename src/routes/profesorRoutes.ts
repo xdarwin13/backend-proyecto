@@ -1,6 +1,6 @@
 import { Request, Response, Application } from "express";
 import { ProfesorController } from "../controllers/profesorController";
-import validateToken from "./veriTokenEstudiantesaaa";
+
 
 export class ProfesorRoutes {
     public profesorController: ProfesorController = new ProfesorController();
@@ -13,6 +13,6 @@ export class ProfesorRoutes {
         app.route("/profesores/login").post(this.profesorController.login);
 
         // Obtener perfil profesor
-        app.route("/profesores/:id").get(validateToken, this.profesorController.getProfile);
+        app.route("/profesores/:id").get( this.profesorController.getProfile);
     }
 }
