@@ -26,6 +26,6 @@ export class MateriaRoutes {
         app.route("/materias/:id").patch(validateTokenAdmin,this.materiaController.actualizarMateria);
 
         // Eliminar materia
-        app.route("/materias/:id").delete(this.materiaController.eliminarMateria);
+        app.route("/materias/:id").delete(validateTokenAdmin,this.materiaController.eliminarMateria);
     }
 }
