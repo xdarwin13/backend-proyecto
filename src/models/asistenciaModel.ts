@@ -56,7 +56,7 @@ AsistenciaModel.init(
         },
         id_materia: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: MateriaModel, // Modelo de materia
                 key: 'id',
