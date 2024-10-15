@@ -18,6 +18,24 @@ export class MateriaController {
         }
     }
 
+
+     // Obtener una materia por ID
+     public async getOneMateria(req: Request, res: Response) {
+        const { id: idParam } = req.params;
+
+        try {
+            const materia = await MateriaModel.findByPk(idParam); // Buscar la materia por ID
+
+            if (materia) {
+                res.status(200).json(materia);
+            } else {
+                return res.status(404).json({ msg: "La materia no existe" });
+            }
+        } catch (error) {
+            res.status(500).json({ msg: "Error interno" });
+        }
+    }
+
  // Listar materias por carrera
  public async listarMaterias(req: Request, res: Response) {
     const { carrera } = req.body; // Ahora espera que 'carrera' se pase en el cuerpo de la solicitud
