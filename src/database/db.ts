@@ -23,7 +23,7 @@ export const database = new Sequelize(
 
 
 async function generateDb() {
-    await database.sync({ force: true})
+    await database.sync({ force: false})
     console.log('Base de datos y tablas creada');
 }
 
