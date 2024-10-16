@@ -34,11 +34,11 @@ export class AdminController {
         return res.status(400).json({ msg: "Credenciales inválidas" });
       }
 
-      const token = jwt.sign({ id: admin.id }, process.env.ADMIN_JWT_SECRET || 'admindefaultsecret', {
+      const token2 = jwt.sign({ id: admin.id }, process.env.ADMIN_JWT_SECRET || 'admindefaultsecret', {
         expiresIn: '1h',
       });
 
-      return res.status(200).json({ token, admin });
+      return res.status(200).json({ token2, admin });
     } catch (error) {
       res.status(500).json({ error: "Error interno del servidor" });
     }

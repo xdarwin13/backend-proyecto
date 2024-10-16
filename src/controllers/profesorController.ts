@@ -34,11 +34,11 @@ export class ProfesorController {
         return res.status(400).json({ msg: "Credenciales inválidas" });
       }
 
-      const token = jwt.sign({ id: professor.id }, process.env.PROFESSOR_JWT_SECRET || 'professordefaultsecret', {
+      const token3 = jwt.sign({ id: professor.id }, process.env.PROFESSOR_JWT_SECRET || 'professordefaultsecret', {
         expiresIn: '1h',
       });
 
-      return res.status(200).json({ token, professor });
+      return res.status(200).json({ token3, professor });
     } catch (error) {
       res.status(500).json({ error: "Error interno del servidor" });
     }
