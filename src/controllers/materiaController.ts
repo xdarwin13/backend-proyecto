@@ -2,21 +2,28 @@ import { Request, Response } from 'express';
 import { MateriaModel } from '../models/materiaModel';
 
 export class MateriaController {
-    // Crear nueva materia
-    public async crearMateria(req: Request, res: Response) {
-        const { nombre, carrera } = req.body;
+// Crear nueva materia
+public async crearMateria(req: Request, res: Response) {
+    const { nombre, carrera } = req.body;
 
-        try {
-            const nuevaMateria = await MateriaModel.create({
-                nombre,
-                carrera,
-            });
-
-            res.status(201).json({ materia: nuevaMateria });
-        } catch (error) {
-            res.status(500).json({ error: "Error al crear la materia" });
+    try {
+        // Verificar si la materia ya existe en la carrera específica
+        const materiaExiste = await MateriaModel.findOne({ where: { nombre, carrera } });
+        if (materiaExiste) {
+            return res.status(400).json({ msg: "La materia ya existe en esta carrera" });
         }
+
+        // Crear la nueva materia si no existe
+        const nuevaMateria = await MateriaModel.create({
+            nombre,
+            carrera,
+        });
+
+        res.status(201).json({ materia: nuevaMateria });
+    } catch (error) {
+        res.status(500).json({ error: "Error al crear la materia" });
     }
+}
 
 
     // Obtener una materia por ID
