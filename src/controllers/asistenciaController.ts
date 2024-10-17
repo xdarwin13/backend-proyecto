@@ -45,6 +45,50 @@ export class AsistenciaController {
     }
   }
 
+
+  // Obtener una asistencia por ID
+public async getOneAsistencia(req: Request, res: Response) {
+  const { id: idParam } = req.params;
+
+  try {
+      const asistencia = await AsistenciaModel.findByPk(idParam, {
+          include: [
+              {
+                  model: EstudianteModel,
+                  attributes: ['id', 'nombre'], // Atributos del estudiante
+                  as: 'estudiante' // Asegúrate de que el alias coincida con la relación
+              },
+              {
+                  model: MateriaModel,
+                  attributes: ['id', 'nombre'], // Atributos de la materia
+                  as: 'materia' // Asegúrate de que el alias coincida con la relación
+              },
+          ],
+      });
+
+      if (asistencia) {
+          // Formatear la respuesta con la información necesaria
+          const response = {
+              id: asistencia.id,
+              id_estudiante: asistencia.id_estudiante,
+              nombre_estudiante: asistencia.estudiante?.nombre,
+              id_materia: asistencia.id_materia,
+              nombre_materia: asistencia.materia?.nombre,
+              salon: asistencia.salon,
+              fecha: asistencia.fecha,
+              hora_entrada: asistencia.hora_entrada,
+              hora_salida: asistencia.hora_salida,
+          };
+          res.status(200).json(response);
+      } else {
+          return res.status(404).json({ msg: "La asistencia no existe" });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error interno" });
+  }
+}
+
 // Listar todas las asistencias con nombres de estudiantes y materias
 public async listarAsistencias(req: Request, res: Response) {
   try {

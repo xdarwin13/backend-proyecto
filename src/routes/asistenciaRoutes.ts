@@ -14,6 +14,9 @@ export class AsistenciaRoutes {
         // Registrar asistencia como profesor
         app.route("/asistencias/profesor").post(validateTokenProfesores,this.asistenciaController.registrarAsistenciaProfesor);
 
+        //Listrar asistencia de un estudiante
+        app.route("/asistencias/:id").get(validateTokenAdmin,this.asistenciaController.getOneAsistencia);
+
         // Listar todas las asistencias
         app.route("/asistencias").get(validateTokenAdmin,this.asistenciaController.listarAsistencias);
 
