@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { AsistenciaModel } from '../models/asistenciaModel';
 import { EstudianteModel } from '../models/estudianteModel';
 import { MateriaModel } from '../models/materiaModel';
+import moment from 'moment-timezone';
+
 export class AsistenciaController {
   // Registrar asistencia como estudiante
   public async registrarAsistenciaEstudiante(req: Request, res: Response) {
@@ -12,7 +14,7 @@ export class AsistenciaController {
         id_estudiante,
         id_materia,
         salon,
-        fecha: new Date(),
+        fecha: moment().tz('America/Bogota').format('YYYY-MM-DD'), 
         hora_entrada,
         hora_salida,
       });
