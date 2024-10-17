@@ -17,7 +17,7 @@ export class EstudianteRoutes {
 
 
         // Obtener perfil estudiante
-        app.route("/estudiantes/:id").get(validateTokenAdmin,this.estudianteController.getProfile);
+        app.route("/estudiantes/:id").get(validateTokenAdmin,this.estudianteController.getOneEstudiante);
 
         // Actualizar estudiante
         app.route("/estudiantes/:id").put(validateTokenAdmin,this.estudianteController.actualizarEstudiante);

@@ -59,22 +59,25 @@ export class EstudianteController {
     }
   }
 
-  public async getProfile(req: Request, res: Response) {
-    try {
-      const studentId = req.params.id;
-      const student = await EstudianteModel.findByPk(studentId, {
-        attributes: ['id', 'nombre', 'email', 'carrera'],
+  // Obtener un estudiante por ID
+public async getOneEstudiante(req: Request, res: Response) {
+  const { id: idParam } = req.params;
+
+  try {
+      const estudiante = await EstudianteModel.findByPk(idParam, {
+          attributes: ['id', 'nombre', 'email', 'carrera'], // Selecciona los campos que quieres retornar
       });
 
-      if (!student) {
-        return res.status(404).json({ msg: "Estudiante no encontrado" });
+      if (estudiante) {
+          res.status(200).json(estudiante); // Retorna los datos del estudiante si lo encuentra
+      } else {
+          return res.status(404).json({ msg: "El estudiante no existe" });
       }
-
-      return res.status(200).json({ student });
-    } catch (error) {
-      res.status(500).json({ error: "Error interno del servidor" });
-    }
+  } catch (error) {
+      res.status(500).json({ msg: "Error interno" });
   }
+}
+
 
 
   // Actualizar estudiante
