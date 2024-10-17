@@ -83,48 +83,57 @@ public async listarAsistencias(req: Request, res: Response) {
 }
 
   // Actualizar asistencia
-  public async actualizarAsistencia(req: Request, res: Response) {
-    const { id: pk } = req.params;
+public async actualizarAsistencia(req: Request, res: Response) {
+  const { id: pk } = req.params;
 
-    const {
-        id_estudiante,
-        id_profesor,
-        id_materia,
-        salon,
-        hora_entrada,
-        hora_salida
-    } = req.body;
+  const {
+      id_estudiante,
+      id_profesor,
+      id_materia,
+      salon,
+      hora_entrada,
+      hora_salida
+  } = req.body;
 
-    try {
-        // Crear el objeto con los nuevos valores para la asistencia
-        let body = {
-            id_estudiante,
-            id_profesor,
-            id_materia,
-            salon,
-            hora_entrada,
-            hora_salida
-        };
+  try {
+      // Verificar si la asistencia existe
+      const asistenciaExist = await AsistenciaModel.findByPk(pk);
+      if (!asistenciaExist) return res.status(404).json({ msg: "La asistencia no existe" });
 
-        // Verificar si la asistencia existe
-        const asistenciaExist = await AsistenciaModel.findByPk(pk);
-        if (!asistenciaExist) return res.status(404).json({ msg: "La asistencia no existe" });
+      // Actualizar la asistencia
+      await AsistenciaModel.update(
+          { id_estudiante, id_profesor, id_materia, salon, hora_entrada, hora_salida },
+          {
+              where: { id: pk },
+              individualHooks: true
+          }
+      );
 
-        // Actualizar la asistencia
-        await AsistenciaModel.update(body, {
-            where: { id: pk },
-            individualHooks: true
-        });
+      // Obtener la asistencia actualizada
+      const asistenciaActualizada = await AsistenciaModel.findByPk(pk);
+      if (asistenciaActualizada) {
+          return res.status(200).json({ asistencia: asistenciaActualizada });
+      }
+  } catch (error) {
+      console.error(error); // Para depuración
+      return res.status(500).json({ error: "Error al actualizar la asistencia" });
+  }
+}
 
-        // Obtener la asistencia actualizada
-        const asistenciaActualizada = await AsistenciaModel.findByPk(pk);
-        if (asistenciaActualizada) return res.status(200).json({ asistencia: asistenciaActualizada });
+ // Eliminar asistencia
+ public async eliminarAsistencia(req: Request, res: Response) {
+  const { id: pk } = req.params;
+  try {
+      // Verificar si la asistencia existe
+      const asistenciaExist = await AsistenciaModel.findByPk(pk);
+      if (!asistenciaExist) return res.status(404).json({ msg: "La asistencia no existe" });
 
-    } catch (error) {
-        // Manejar el error y enviar respuesta de error
-        console.error(error); // Esto ayuda a depurar el error
-        return res.status(500).json({ error: "Error al actualizar la asistencia" });
-    }
+      // Eliminar la asistencia
+      await AsistenciaModel.destroy({ where: { id: pk } });
+      res.status(200).json({ msg: "Asistencia eliminada" });
+  } catch (error) {
+      res.status(500).json({ error: "Error al eliminar la asistencia" });
+  }
 }
 
 }

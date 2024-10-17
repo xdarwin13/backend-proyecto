@@ -19,5 +19,10 @@ export class AsistenciaRoutes {
 
         // Actualizar asistencia
         app.route("/asistencias/:id").patch(validateTokenAdmin,this.asistenciaController.actualizarAsistencia);
+
+        // Eliminar asistencia
+        app.route("/asistencias/:id").delete(validateTokenAdmin,this.asistenciaController.eliminarAsistencia);
+    
+    
     }
 }

@@ -60,4 +60,54 @@ export class EstudianteController {
       res.status(500).json({ error: "Error interno del servidor" });
     }
   }
+
+
+  // Actualizar estudiante
+public async actualizarEstudiante(req: Request, res: Response) {
+  const { id: pk } = req.params;
+  const { nombre, email, carrera, password } = req.body;
+
+  try {
+      // Verificar si el estudiante existe
+      const estudianteExist = await EstudianteModel.findByPk(pk);
+      if (!estudianteExist) return res.status(404).json({ msg: "Estudiante no encontrado" });
+
+      // Preparar el objeto con los datos actualizados
+      let updateData = { nombre, email, carrera, password };
+
+      // Actualizar el estudiante
+      await EstudianteModel.update(updateData, {
+          where: { id: pk },
+          individualHooks: true // Este hook maneja el cifrado de la contraseña
+      });
+
+      // Obtener el estudiante actualizado
+      const estudianteActualizado = await EstudianteModel.findByPk(pk, {
+          attributes: ['id', 'nombre', 'email', 'carrera'] // No devolvemos la contraseña
+      });
+
+      if (estudianteActualizado) {
+          return res.status(200).json({ student: estudianteActualizado });
+      }
+  } catch (error) {
+      console.error(error); // Para depuración
+      return res.status(500).json({ error: "Error al actualizar el estudiante" });
+  }
+}
+ // Eliminar estudiante
+ public async eliminarEstudiante(req: Request, res: Response) {
+  const { id: pk } = req.params;
+  try {
+      // Verificar si el estudiante existe
+      const estudianteExist = await EstudianteModel.findByPk(pk);
+      if (!estudianteExist) return res.status(404).json({ msg: "El estudiante no existe" });
+
+      // Eliminar el estudiante
+      await EstudianteModel.destroy({ where: { id: pk } });
+      res.status(200).json({ msg: "Estudiante eliminado" });
+  } catch (error) {
+      res.status(500).json({ error: "Error al eliminar el estudiante" });
+  }
+}
+
 }
