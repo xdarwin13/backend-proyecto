@@ -93,7 +93,8 @@ public async crearMateria(req: Request, res: Response) {
             if (!materiaExist) return res.status(404).json({ msg: "La materia no existe" });
 
             await MateriaModel.update({ nombre, carrera }, {
-                where: { id: pk }
+                where: { id: pk },
+                individualHooks: true
             });
 
             const materiaActualizada = await MateriaModel.findByPk(pk);

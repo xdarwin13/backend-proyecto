@@ -112,7 +112,8 @@ public async listarAsistencias(req: Request, res: Response) {
 
         // Actualizar la asistencia
         await AsistenciaModel.update(body, {
-            where: { id: pk }
+            where: { id: pk },
+            individualHooks: true
         });
 
         // Obtener la asistencia actualizada
