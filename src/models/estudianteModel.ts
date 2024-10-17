@@ -62,6 +62,8 @@ EstudianteModel.init(
     hooks: {
       beforeValidate: (estudiante: EstudianteModel) => {
         if (typeof estudiante.email === "string") estudiante.email = estudiante.email.trim().toLowerCase();
+        if (typeof estudiante.nombre === "string") estudiante.nombre = estudiante.nombre.trim().toLocaleUpperCase();
+        if (typeof estudiante.carrera === "string") estudiante.carrera = estudiante.carrera.trim().toLocaleUpperCase();
       },
       beforeCreate: async (estudiante: EstudianteModel) => {
         estudiante.password = await bcryptjs.hash(estudiante.password, 8);
