@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import { database } from "../database/db";
 import bcryptjs from 'bcryptjs';
-import moment from 'moment-timezone';
+
 
 export class EstudianteModel extends Model {
   public id!: number;
@@ -48,11 +48,11 @@ EstudianteModel.init(
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: () => moment().tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss'),
+      defaultValue: () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
     },
     updatedAt: {
       type: DataTypes.DATE,
-      defaultValue: () => moment().tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss'),
+      defaultValue: () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
     },
   },
   {
@@ -70,7 +70,7 @@ EstudianteModel.init(
         if (estudiante.changed("password")) {
           estudiante.password = await bcryptjs.hash(estudiante.password, 8);
         }
-        estudiante.updatedAt = moment().tz('America/Bogota').toDate();
+        estudiante.updatedAt = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
       },
     },
   }

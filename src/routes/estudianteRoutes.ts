@@ -12,6 +12,10 @@ export class EstudianteRoutes {
         // Login estudiante
         app.route("/estudiantes/login").post(this.estudianteController.login);
 
+        // Listar todos los estudiantes
+        app.route("/estudiantes").get(validateTokenAdmin, this.estudianteController.mostrarTodosLosEstudiantes);
+
+
         // Obtener perfil estudiante
         app.route("/estudiantes/:id").get(validateTokenAdmin,this.estudianteController.getProfile);
 
