@@ -34,11 +34,11 @@ MateriaModel.init(
         },
         createdAt: {
             type: DataTypes.DATE,
-            defaultValue: () => moment().tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss'),
+            defaultValue: () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
         },
         updatedAt: {
             type: DataTypes.DATE,
-            defaultValue: () => moment().tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss'),
+            defaultValue:() => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
         },
     },
     {
@@ -50,11 +50,9 @@ MateriaModel.init(
                 if (typeof materia.nombre === "string") materia.nombre = materia.nombre.trim().toLocaleUpperCase();
                 if (typeof materia.carrera === "string") materia.carrera = materia.carrera.trim().toLocaleUpperCase();
             },
-            beforeCreate: (materia: MateriaModel) => {
-                materia.createdAt = moment().tz('America/Bogota').toDate();
-            },
+        
             beforeUpdate: (materia: MateriaModel) => {
-                materia.updatedAt = moment().tz('America/Bogota').toDate();
+                materia.updatedAt = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
             },
         },
     }

@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import { database } from "../database/db";
 import bcryptjs from 'bcryptjs';
-import moment from 'moment-timezone';
+
 
 export class AdminModel extends Model {
   public id!: number;
@@ -42,11 +42,11 @@ AdminModel.init(
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: () => moment().tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss'),
+      defaultValue: () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
     },
     updatedAt: {
       type: DataTypes.DATE,
-      defaultValue: () => moment().tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss'),
+      defaultValue: () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
     },
   },
   {
@@ -64,7 +64,7 @@ AdminModel.init(
         if (admin.changed("password")) {
           admin.password = await bcryptjs.hash(admin.password, 8);
         }
-        admin.updatedAt = moment().tz('America/Bogota').toDate();
+        admin.updatedAt = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
       },
     },
   }

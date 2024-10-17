@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import { database } from "../database/db";
 import bcryptjs from 'bcryptjs';
-import moment from 'moment-timezone';
+
 
 export class ProfesorModel extends Model {
   public id!: number;
@@ -42,11 +42,11 @@ ProfesorModel.init(
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: () => moment().tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss'),
+      defaultValue: () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
     },
     updatedAt: {
       type: DataTypes.DATE,
-      defaultValue: () => moment().tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss'),
+      defaultValue:() => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
     },
   },
   {
@@ -64,7 +64,7 @@ ProfesorModel.init(
         if (profesor.changed("password")) {
           profesor.password = await bcryptjs.hash(profesor.password, 8);
         }
-        profesor.updatedAt = moment().tz('America/Bogota').toDate();
+        profesor.updatedAt = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
       },
     },
   }

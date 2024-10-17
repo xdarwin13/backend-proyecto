@@ -1,6 +1,5 @@
 import { Model, DataTypes } from "sequelize";
 import { database } from "../database/db";
-import moment from 'moment-timezone';
 import { EstudianteModel } from "./estudianteModel";
 import { ProfesorModel } from "./profesorModel";
 import { MateriaModel } from "./materiaModel"; // Importa el modelo de materia
@@ -19,6 +18,9 @@ export class AsistenciaModel extends Model {
     public estudiante?: EstudianteModel; // Propiedad para la relación estudiante
     public profesor?: ProfesorModel;       // Propiedad para la relación profesor
     public materia?: MateriaModel;         // Propiedad para la relación materia
+
+    public createdAt!: Date;
+    public updatedAt!: Date;
 }
 
 export interface AsistenciaI {
@@ -29,6 +31,8 @@ export interface AsistenciaI {
     fecha: Date;
     hora_entrada: Date;
     hora_salida?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 AsistenciaModel.init(
@@ -68,21 +72,34 @@ AsistenciaModel.init(
         },
         fecha: {
             type: DataTypes.DATEONLY,
-            defaultValue: () => moment().tz('America/Bogota').format('YYYY-MM-DD'),
+            defaultValue: () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
         },
         hora_entrada: {
             type: DataTypes.TIME, // Solo la hora
-            defaultValue: () => moment().tz('America/Bogota').format('HH:mm:ss'),
+            defaultValue: () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
         },
         hora_salida: {
             type: DataTypes.TIME,
             allowNull: true,
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            defaultValue: () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
+          },
+          updatedAt: {
+            type: DataTypes.DATE,
+            defaultValue: () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' })),
+          },
     },
     {
         tableName: "asistencias",
         sequelize: database,
         timestamps: false,
+        hooks: {
+            beforeUpdate: (bus: AsistenciaModel) => {
+              bus.updatedAt = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
+            },
+          },
     }
 );
 
