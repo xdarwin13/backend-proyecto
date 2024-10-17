@@ -89,6 +89,7 @@ public async getOneAsistencia(req: Request, res: Response) {
   }
 }
 
+
 // Listar todas las asistencias con nombres de estudiantes y materias
 public async listarAsistencias(req: Request, res: Response) {
   try {
@@ -109,6 +110,7 @@ public async listarAsistencias(req: Request, res: Response) {
 
       // Formatear la respuesta para incluir solo lo necesario
       const response = asistencias.map(asistencia => ({
+          id: asistencia.id,
           id_estudiante: asistencia.id_estudiante,
           nombre_estudiante: asistencia.estudiante?.nombre, // Acceder al nombre del estudiante
           id_materia: asistencia.id_materia,
