@@ -7,14 +7,14 @@ import moment from 'moment-timezone';
 export class AsistenciaController {
   // Registrar asistencia como estudiante
   public async registrarAsistenciaEstudiante(req: Request, res: Response) {
-    const { id_estudiante, id_materia, salon, hora_entrada, hora_salida } = req.body;
+    const { id_estudiante, id_materia, salon, fecha, hora_entrada, hora_salida } = req.body;
 
     try {
       const nuevaAsistencia = await AsistenciaModel.create({
         id_estudiante,
         id_materia,
         salon,
-        fecha: moment().tz('America/Bogota').format('YYYY-MM-DD'), 
+        fecha,
         hora_entrada,
         hora_salida,
       });
