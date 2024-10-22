@@ -9,7 +9,7 @@ export class AsistenciaModel extends Model {
     public id_estudiante?: number; // Relación opcional con estudiante
     public id_profesor?: number;   // Relación opcional con profesor
     public id_materia!: number;     // Relación con materia (clave foránea)
-    public salon!: string;          // Campo para almacenar el número del salón
+    public salon!: number;          // Campo para almacenar el número del salón
     public fecha!: Date;
     public hora_entrada!: Date;
     public hora_salida?: Date;
@@ -27,7 +27,7 @@ export interface AsistenciaI {
     id_estudiante?: number; // Relación opcional con estudiante
     id_profesor?: number;   // Relación opcional con profesor
     id_materia: number;     // Relación con materia (clave foránea)
-    salon: string;          // Campo para almacenar el número del salón
+    salon: number;          // Campo para almacenar el número del salón
     fecha: Date;
     hora_entrada: Date;
     hora_salida?: Date;
@@ -67,7 +67,7 @@ AsistenciaModel.init(
             },
         },
         salon: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         fecha: {

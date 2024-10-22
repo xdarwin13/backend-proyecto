@@ -17,8 +17,6 @@ export class MateriaRoutes {
         app.route("/materias/:id").get(validateTokenAdmin,this.materiaController.getOneMateria);
 
 
-
-
         // Listar todas las materias Estudiantes
         app.route("/materias/carreras").post(validateTokenEstudiantes,this.materiaController.listarMaterias);
 

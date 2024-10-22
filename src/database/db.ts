@@ -14,9 +14,10 @@ export const database = new Sequelize(
     DB_PASS,
 
     {
-        host: '158.247.127.59',
+        host: '3.20.227.234',
         dialect: 'mysql',
-        port: 3306
+        port: 3306,
+        timezone: '-05:00',
     }
 
 );

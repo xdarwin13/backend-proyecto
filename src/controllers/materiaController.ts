@@ -72,10 +72,6 @@ public async crearMateria(req: Request, res: Response) {
     try {
         const materias = await MateriaModel.findAll(); // Obtiene todas las materias
 
-        if (materias.length === 0) {
-            return res.status(404).json({ msg: "No se encontraron materias" });
-        }
-
         res.status(200).json({ materias });
     } catch (error) {
         res.status(500).json({ error: "Error al obtener las materias" });

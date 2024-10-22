@@ -49,9 +49,6 @@ export class EstudianteController {
     try {
       const estudiantes = await EstudianteModel.findAll(); // Obtener todos los estudiantes
 
-      if (estudiantes.length === 0) {
-        return res.status(404).json({ msg: "No se encontraron estudiantes" });
-      }
 
       return res.status(200).json({ estudiantes });
     } catch (error) {
