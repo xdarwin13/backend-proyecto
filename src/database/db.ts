@@ -17,7 +17,7 @@ export const database = new Sequelize(
         host: '3.20.227.234',
         dialect: 'mysql',
         port: 3306,
-        timezone: '-05:00',
+        //timezone: '-05:00',
     }
 
 );
